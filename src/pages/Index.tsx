@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import ExerciseSession from '@/components/ExerciseSession';
 import StatsPage from '@/components/StatsPage';
+import ProfilePage from '@/components/ProfilePage';
 import Navigation from '@/components/Navigation';
 
 interface Achievement {
@@ -34,7 +35,7 @@ export default function Index() {
   const [streak] = useState(7);
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
   const [showExerciseSession, setShowExerciseSession] = useState(false);
-  const [currentPage, setCurrentPage] = useState<'home' | 'stats'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'stats' | 'profile'>('home');
 
   const achievements: Achievement[] = [
     {
@@ -158,6 +159,15 @@ export default function Index() {
     return (
       <>
         <StatsPage onBack={() => setCurrentPage('home')} />
+        <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
+      </>
+    );
+  }
+
+  if (currentPage === 'profile') {
+    return (
+      <>
+        <ProfilePage onBack={() => setCurrentPage('home')} />
         <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
       </>
     );

@@ -1,14 +1,15 @@
 import Icon from '@/components/ui/icon';
 
 interface NavigationProps {
-  currentPage: 'home' | 'stats';
-  onNavigate: (page: 'home' | 'stats') => void;
+  currentPage: 'home' | 'stats' | 'profile';
+  onNavigate: (page: 'home' | 'stats' | 'profile') => void;
 }
 
 export default function Navigation({ currentPage, onNavigate }: NavigationProps) {
   const navItems = [
     { id: 'home' as const, label: 'Главная', icon: 'Home' },
     { id: 'stats' as const, label: 'Прогресс', icon: 'BarChart3' },
+    { id: 'profile' as const, label: 'Профиль', icon: 'User' },
   ];
 
   return (
