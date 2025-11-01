@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import ExerciseSession from '@/components/ExerciseSession';
+import StatsPage from '@/components/StatsPage';
+import Navigation from '@/components/Navigation';
 
 interface Achievement {
   id: string;
@@ -32,6 +34,7 @@ export default function Index() {
   const [streak] = useState(7);
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
   const [showExerciseSession, setShowExerciseSession] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'stats'>('home');
 
   const achievements: Achievement[] = [
     {
@@ -151,8 +154,17 @@ export default function Index() {
     );
   }
 
+  if (currentPage === 'stats') {
+    return (
+      <>
+        <StatsPage onBack={() => setCurrentPage('home')} />
+        <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
+      </>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 pb-24">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <header className="mb-12 animate-fade-in">
           <div className="flex items-center justify-between mb-6">
@@ -338,6 +350,7 @@ export default function Index() {
           </Card>
         </section>
       </div>
+      <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
     </div>
   );
 }
