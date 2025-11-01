@@ -4,6 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import ExerciseSession from '@/components/ExerciseSession';
 
 interface Achievement {
   id: string;
@@ -29,6 +30,8 @@ export default function Index() {
   const [xp] = useState(2450);
   const [xpToNextLevel] = useState(3000);
   const [streak] = useState(7);
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
+  const [showExerciseSession, setShowExerciseSession] = useState(false);
 
   const achievements: Achievement[] = [
     {
@@ -127,6 +130,26 @@ export default function Index() {
         return '';
     }
   };
+
+  const handleExerciseComplete = () => {
+    setShowExerciseSession(false);
+    setSelectedExercise(null);
+  };
+
+  const handleBack = () => {
+    setShowExerciseSession(false);
+    setSelectedExercise(null);
+  };
+
+  if (showExerciseSession && selectedExercise) {
+    return (
+      <ExerciseSession
+        exercise={selectedExercise}
+        onComplete={handleExerciseComplete}
+        onBack={handleBack}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
@@ -282,6 +305,10 @@ export default function Index() {
                   <Button
                     className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold"
                     size="lg"
+                    onClick={() => {
+                      setSelectedExercise(exercise);
+                      setShowExerciseSession(true);
+                    }}
                   >
                     <Icon name="Play" size={20} className="mr-2" />
                     Начать упражнение
